@@ -3,6 +3,7 @@ const paddle = document.getElementById('paddle');
 const scoreDisplay = document.getElementById('score');
 const gameOverDisplay = document.getElementById('game-over');
 const finalScoreDisplay = document.getElementById('final-score');
+const restartButton = document.getElementById('restart-button');
 
 let paddleWidth = 100;
 let paddleHeight = 20;
@@ -54,7 +55,11 @@ function gameOver() {
     isGameOver = true;
     finalScoreDisplay.textContent = score;
     gameOverDisplay.style.display = 'block';
+    restartButton.style.display = 'block'; // Show the restart button
 }
+
+// Add event listener for the restart button
+restartButton.addEventListener('click', resetGame);
 
 function gameLoop() {
     if (isGameOver) return;
@@ -69,6 +74,22 @@ function gameLoop() {
     squares.forEach(updateSquarePosition);
 
     requestAnimationFrame(gameLoop);
+}
+
+function resetGame() {
+    // Reset game state
+    isGameOver = false;
+    score = 0;
+    scoreDisplay.textContent = `Score: ${score}`;
+    gameOverDisplay.style.display = 'none';
+    restartButton.style.display = 'none';
+
+    // Remove all squares
+    const squares = document.querySelectorAll('.square');
+    squares.forEach(square => square.remove());
+
+    // Restart the game loop
+    gameLoop();
 }
 
 gameLoop();
