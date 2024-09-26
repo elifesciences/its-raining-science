@@ -23,6 +23,21 @@ document.addEventListener('mousemove', (e) => {
     paddle.style.left = `${newPaddleX}px`;
 });
 
+document.addEventListener('keydown', (e) => {
+    if (!isInputEnabled) return; // Disable input when the game is over
+
+    const paddleLeft = parseFloat(paddle.style.left);
+    const paddleSpeed = 20; // Speed of paddle movement
+
+    if (e.key === 'a') { // Move left
+        const newPaddleX = Math.max(0, paddleLeft - paddleSpeed);
+        paddle.style.left = `${newPaddleX}px`;
+    } else if (e.key === 'd') { // Move right
+        const newPaddleX = Math.min(gameContainerWidth - paddleWidth, paddleLeft + paddleSpeed);
+        paddle.style.left = `${newPaddleX}px`;
+    }
+});
+
 function createFallingSquare() {
     const square = document.createElement('div');
     square.classList.add('square');
