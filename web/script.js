@@ -4,6 +4,7 @@ const scoreDisplay = document.getElementById('score');
 const gameOverDisplay = document.getElementById('game-over');
 const finalScoreDisplay = document.getElementById('final-score');
 const restartButton = document.getElementById('restart-button');
+const gamepads = navigator.gamepads ? navigator.gamepads : null;
 
 let paddleWidth = 100;
 let paddleHeight = 20;
@@ -14,6 +15,7 @@ let squareFallSpeed = 3; // Medium speed
 let score = 0;
 let isGameOver = false;
 let isInputEnabled = false; // Track input state
+let controller;
 
 document.addEventListener('mousemove', (e) => {
     if (!isInputEnabled) return; // Disable input when the game is over
@@ -36,6 +38,15 @@ document.addEventListener('keydown', (e) => {
         const newPaddleX = Math.min(gameContainerWidth - paddleWidth, paddleLeft + paddleSpeed);
         paddle.style.left = `${newPaddleX}px`;
     }
+});
+
+window.addEventListener('gamepadconnected', (event) => {
+    console.log('Gamepad connected:', event.gamepad);
+    update();
+});
+
+window.addEventListener('gamepaddisconnected', (event) => {
+    console.log('Gamepad disconnected:', event.gamepad);
 });
 
 function createFallingSquare() {
