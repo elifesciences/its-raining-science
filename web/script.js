@@ -13,8 +13,11 @@ let squareSize = 30;
 let squareFallSpeed = 3; // Medium speed
 let score = 0;
 let isGameOver = false;
+let isInputEnabled = false; // Track input state
 
 document.addEventListener('mousemove', (e) => {
+    if (!isInputEnabled) return; // Disable input when the game is over
+
     const mouseX = e.clientX - gameContainer.offsetLeft;
     const newPaddleX = Math.max(0, Math.min(gameContainerWidth - paddleWidth, mouseX - paddleWidth / 2));
     paddle.style.left = `${newPaddleX}px`;
@@ -53,6 +56,7 @@ function updateSquarePosition(square) {
 
 function gameOver() {
     isGameOver = true;
+    isInputEnabled = false; // Disable input
     finalScoreDisplay.textContent = score;
     gameOverDisplay.style.display = 'block';
     restartButton.style.display = 'block'; // Show the restart button
@@ -79,6 +83,7 @@ function gameLoop() {
 function resetGame() {
     // Reset game state
     isGameOver = false;
+    isInputEnabled = true; // Enable input
     score = 0;
     scoreDisplay.textContent = `Score: ${score}`;
     gameOverDisplay.style.display = 'none';
