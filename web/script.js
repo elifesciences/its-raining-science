@@ -67,7 +67,8 @@ restartButton.addEventListener('click', resetGame);
 
 function gameLoop() {
     if (isGameOver) return;
-
+    
+    isInputEnabled = true; // Ensable input
     // Create new square every 1.5 seconds
     if (Math.random() < 0.01) {
         createFallingSquare();
